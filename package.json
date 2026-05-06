@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" feat(ui): build landing page, login, and register page UI \" && git push"
+    "commit": "git add . && git commit -m \" feat(routing): set up role-based routing structure and create folders for admin, doctor, and patient \" && git push"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
