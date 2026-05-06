@@ -7,11 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" chore: initialize Next.js app with shadcn/ui and Tailwind setup \" && git push"
+    "commit": "git add . && git commit -m \" feat(ui): build landing page, login, and register page UI \" && git push"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.38.0",
     "lucide-react": "^1.14.0",
     "next": "16.2.4",
     "radix-ui": "^1.4.3",

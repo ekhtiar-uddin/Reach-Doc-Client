@@ -1,9 +1,13 @@
-import { Button } from "@/components/ui/button";
+import { Hero } from "@/components/modules/Hero";
+import { PatientReviews } from "@/components/modules/PatientReview";
+import { TopDoctors } from "@/components/modules/TopDoctors";
 
 export default function Home() {
   return (
-    <div>
-      <Button variant="default">Click Me</Button>
-    </div>
+    <main>
+      <Hero />
+      <TopDoctors />
+      <PatientReviews />
+    </main>
   );
 }
