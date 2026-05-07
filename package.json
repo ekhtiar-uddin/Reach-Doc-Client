@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" feat(auth): add proxy setup for role-based route protection and access control \" && git push"
+    "commit": "git add . && git commit -m \" refactor(auth): update proxy utilities with setCookie, getCookie, and deleteCookie support \" && git push"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
