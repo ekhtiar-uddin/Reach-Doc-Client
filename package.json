@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" refactor(auth): update proxy utilities with setCookie, getCookie, and deleteCookie support \" && git push"
+    "commit": "git add . && git commit -m \" feat(auth): add logout functionality and navbar logout button \" && git push"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
