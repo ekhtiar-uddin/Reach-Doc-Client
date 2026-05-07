@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" feat(ui): add toast notifications for login and logout functionality \" && git push"
+    "commit": "git add . && git commit -m \" feat(dashboard): create complete dashboard layout structure \" && git push"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
