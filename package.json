@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" feat: add SearchFilter in shared and useDebounce in hooks   \" && git push",
-    "shadcn": "npx shadcn@latest add table"
+    "commit": "git add . && git commit -m \" feat: add TableSkeleton and SelectFilter   \" && git push",
+    "shadcn": "npx shadcn@latest add skeleton"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
