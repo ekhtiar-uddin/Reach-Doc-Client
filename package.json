@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" added reusable components \" && git push",
+    "commit": "git add . && git commit -m \" feat: add specialties management and display in admin dashboard \" && git push",
     "shadcn": "npx shadcn@latest add dialog alert-dialog"
   },
   "dependencies": {
