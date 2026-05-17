@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" feat: add reusable ManagementPageHeader component \" && git push",
+    "commit": "git add . && git commit -m \" feat: add reusable RefreshButton in shared \" && git push",
     "shadcn": "npx shadcn@latest add table"
   },
   "dependencies": {
