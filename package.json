@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" refactor: improve codebase and fix login/register form errors \" && git push",
-    "shadcn": "npx shadcn@latest add skeleton"
+    "commit": "git add . && git commit -m \" feat: add SpecialitiesFormDialog \" && git push",
+    "shadcn": "npx shadcn@latest add dialog alert-dialog"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
