@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" feat: add TablePagination   \" && git push",
+    "commit": "git add . && git commit -m \" feat: create admin service functions  \" && git push",
     "shadcn": "npx shadcn@latest add skeleton"
   },
   "dependencies": {
