@@ -8,7 +8,7 @@ import { Suspense } from "react";
 const AdminSpecialitiesManagementPage = async () => {
   const result = await getSpecialities();
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 ">
       <SpecialitiesManagementHeader />
       <div className="flex">
         <RefreshButton />
@@ -16,6 +16,7 @@ const AdminSpecialitiesManagementPage = async () => {
       <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
         <SpecialitiesTable specialities={result.data} />
       </Suspense>
+      <div className="bg-red-400">sdfds</div>
     </div>
   );
 };
