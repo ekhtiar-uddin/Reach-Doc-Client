@@ -1,12 +1,15 @@
 import DoctorsManagementHeader from "@/components/modules/Admin/DoctorManagement/DoctorsManagementHeader";
+import DoctorsTable from "@/components/modules/Admin/DoctorManagement/DoctorsTable";
 import RefreshButton from "@/components/shared/RefreshButton";
 import SearchFilter from "@/components/shared/SearchFilter";
 import SelectFilter from "@/components/shared/SelectFilter";
+import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
 
 import { getDoctors } from "@/services/admin/doctorManagement";
 import { getSpecialities } from "@/services/admin/specialitiesManagement";
 import { ISpecialty } from "@/types/specialities.interface";
+import { Suspense } from "react";
 
 const AdminDoctorsManagementPage = async ({
   searchParams,
@@ -35,6 +38,12 @@ const AdminDoctorsManagementPage = async ({
         />
         <RefreshButton />
       </div>
+      <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>
+        <DoctorsTable
+          doctors={doctorsResult.data}
+          specialities={specialitiesResult.data}
+        />
+      </Suspense>
     </div>
   );
 };
