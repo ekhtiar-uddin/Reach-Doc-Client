@@ -1,3 +1,4 @@
+import DoctorFilters from "@/components/modules/Admin/DoctorManagement/DoctorFilters";
 import DoctorsManagementHeader from "@/components/modules/Admin/DoctorManagement/DoctorsManagementHeader";
 import DoctorsTable from "@/components/modules/Admin/DoctorManagement/DoctorsTable";
 import TablePagination from "@/components/shared/TablePagination";
@@ -16,14 +17,14 @@ const AdminDoctorsManagementPage = async ({
   const queryString = queryStringFormatter(searchParamsObj); // {searchTerm: "John", speciality: "Cardiology" => "?searchTerm=John&speciality=Cardiology"}
   const specialitiesResult = await getSpecialities();
   const doctorsResult = await getDoctors(queryString);
-  console.log({ doctorsResult });
+  console.log("sdfsdf", { doctorsResult });
   const totalPages = Math.ceil(
     (doctorsResult?.meta?.total || 1) / (doctorsResult?.meta?.limit || 1),
   );
   return (
     <div className="space-y-6">
       <DoctorsManagementHeader specialities={specialitiesResult?.data || []} />
-      {/* <DoctorFilters specialties={specialitiesResult?.data || []} /> */}
+      <DoctorFilters specialties={specialitiesResult?.data || []} />
       <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>
         <DoctorsTable
           doctors={doctorsResult.data}
