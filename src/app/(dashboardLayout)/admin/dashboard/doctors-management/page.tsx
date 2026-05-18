@@ -3,9 +3,9 @@ import DoctorsTable from "@/components/modules/Admin/DoctorManagement/DoctorsTab
 import RefreshButton from "@/components/shared/RefreshButton";
 import SearchFilter from "@/components/shared/SearchFilter";
 import SelectFilter from "@/components/shared/SelectFilter";
+import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
-
 import { getDoctors } from "@/services/admin/doctorManagement";
 import { getSpecialities } from "@/services/admin/specialitiesManagement";
 import { ISpecialty } from "@/types/specialities.interface";
@@ -42,6 +42,10 @@ const AdminDoctorsManagementPage = async ({
         <DoctorsTable
           doctors={doctorsResult.data}
           specialities={specialitiesResult.data}
+        />
+        <TablePagination
+          currentPage={doctorsResult.meta.page}
+          totalPages={totalPages}
         />
       </Suspense>
     </div>
