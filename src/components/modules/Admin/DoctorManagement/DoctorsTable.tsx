@@ -9,6 +9,7 @@ import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import DoctorFormDialog from "./DoctorFormDialog";
 import { doctorsColumns } from "./doctorsColumns";
+import DoctorViewDetailDialog from "./DoctorViewDetailDialog";
 
 interface DoctorsTableProps {
   doctors: IDoctor[];
@@ -78,6 +79,13 @@ const DoctorsTable = ({ doctors, specialities }: DoctorsTableProps) => {
           setEditingDoctor(null);
           handleRefresh();
         }}
+      />
+
+      {/* View Doctor Detail Dialog */}
+      <DoctorViewDetailDialog
+        open={!!viewingDoctor}
+        onClose={() => setViewingDoctor(null)}
+        doctor={viewingDoctor}
       />
 
       {/* Delete Confirmation Dialog */}

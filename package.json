@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" feat: added table pagination in doctors management \" && git push",
+    "commit": "git add . && git commit -m \" feat: showing doctor details in DoctorViewDetailDialog \" && git push",
     "shadcn": "npx shadcn@latest add avatar"
   },
   "dependencies": {
