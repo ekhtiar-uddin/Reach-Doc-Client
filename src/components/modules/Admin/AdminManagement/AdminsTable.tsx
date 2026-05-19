@@ -11,6 +11,7 @@ import AdminFormDialog from "./AdminFormDialog";
 
 import { softDeleteAdmin } from "@/services/admin/adminManagement";
 import { adminsColumns } from "./adminsColumns";
+import AdminViewDetailDialog from "./AdminViewDetailDialog";
 
 interface AdminsTableProps {
   admins: IAdmin[];
@@ -82,6 +83,11 @@ const AdminsTable = ({ admins }: AdminsTableProps) => {
       />
 
       {/* View Admin Detail Dialog */}
+      <AdminViewDetailDialog
+        open={!!viewingAdmin}
+        onClose={() => setViewingAdmin(null)}
+        admin={viewingAdmin}
+      />
 
       {/* Delete Confirmation Dialog */}
       <DeleteConfirmationDialog
