@@ -2,6 +2,8 @@
 "use server";
 
 import { serverFetch } from "@/lib/server-fetch";
+import { zodValidator } from "@/lib/zodValidator";
+import { updatePatientZodSchema } from "@/zod/patient.validation";
 
 /**
  * GET ALL PATIENTS
@@ -91,6 +93,42 @@ export async function updatePatient(
           ? error.message
           : "Failed to update patient",
       formData: validationPayload,
+    };
+  }
+}
+
+/**
+ * SOFT DELETE PATIENT
+ * API: DELETE /patient/soft/:id
+ */
+export async function softDeletePatient(id: string) {
+  try {
+    const response = await serverFetch.delete(`/patient/soft/${id}`);
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${process.env.NODE_ENV === "development" ? error.message : "Something went wrong"}`,
+    };
+  }
+}
+
+/**
+ * HARD DELETE PATIENT
+ * API: DELETE /patient/:id
+ */
+export async function deletePatient(id: string) {
+  try {
+    const response = await serverFetch.delete(`/patient/${id}`);
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${process.env.NODE_ENV === "development" ? error.message : "Something went wrong"}`,
     };
   }
 }
