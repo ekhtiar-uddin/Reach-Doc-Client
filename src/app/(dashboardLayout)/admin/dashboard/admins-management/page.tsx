@@ -1,5 +1,6 @@
 import AdminsFilter from "@/components/modules/Admin/AdminManagement/AdminsFilter";
 import AdminsManagementHeader from "@/components/modules/Admin/AdminManagement/AdminsManagementHeader";
+import AdminsTable from "@/components/modules/Admin/AdminManagement/AdminsTable";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
@@ -28,7 +29,7 @@ const AdminAdminsManagementPage = async ({
       <AdminsFilter />
 
       <Suspense fallback={<TableSkeleton columns={8} rows={10} />}>
-        {/* <AdminsTable admins={adminsResult?.data || []} /> */}
+        <AdminsTable admins={adminsResult?.data || []} />
         <TablePagination
           currentPage={adminsResult?.meta?.page || 1}
           totalPages={totalPages || 1}
