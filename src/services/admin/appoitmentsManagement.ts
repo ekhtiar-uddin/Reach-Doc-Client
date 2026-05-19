@@ -40,3 +40,28 @@ export async function getAppointmentById(id: string) {
     };
   }
 }
+
+/**
+ * CHANGE APPOINTMENT STATUS
+ * API: PATCH /appointment/status/:id
+ */
+export async function changeAppointmentStatus(id: string, status: string) {
+  try {
+    const response = await serverFetch.patch(`/appointment/status/${id}`, {
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    });
+
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.error("Change appointment status error:", error);
+    return {
+      success: false,
+      message:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Failed to change status",
+    };
+  }
+}
