@@ -91,3 +91,21 @@ export async function getAdmins(queryString?: string) {
     };
   }
 }
+
+/**
+ * GET ADMIN BY ID
+ * API: GET /admin/:id
+ */
+export async function getAdminById(id: string) {
+  try {
+    const response = await serverFetch.get(`/admin/${id}`);
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${process.env.NODE_ENV === "development" ? error.message : "Something went wrong"}`,
+    };
+  }
+}
