@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { changeAppointmentStatus } from "@/services/admin/appoitmentsManagement";
 
 import {
   AppointmentStatus,
