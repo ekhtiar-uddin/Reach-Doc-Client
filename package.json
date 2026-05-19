@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" feat: create createAdmin service function \" && git push",
+    "commit": "git add . && git commit -m \" feat: create getAdmins service function \" && git push",
     "shadcn": "npx shadcn@latest add checkbox command popover"
   },
   "dependencies": {
