@@ -1,4 +1,5 @@
 import { IDoctor } from "./doctor.interface";
+import { IPatient } from "./patient.interface";
 
 export enum AppointmentStatus {
   SCHEDULED = "SCHEDULED",
@@ -22,7 +23,7 @@ export interface IAppointment {
   paymentStatus: PaymentStatus;
   createdAt: string;
   updatedAt: string;
-  //   patient?: IPatient;
+  patient?: IPatient;
   doctor?: IDoctor;
   //   schedule?: ISchedule;
 }
