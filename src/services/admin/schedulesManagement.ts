@@ -74,3 +74,23 @@ export async function createSchedule(_prevState: any, formData: FormData) {
     };
   }
 }
+
+/**
+ * GET ALL SCHEDULES
+ * API: GET /schedule?queryParams
+ */
+export async function getSchedules(queryString?: string) {
+  try {
+    const response = await serverFetch.get(
+      `/schedule${queryString ? `?${queryString}` : ""}`,
+    );
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${process.env.NODE_ENV === "development" ? error.message : "Something went wrong"}`,
+    };
+  }
+}
