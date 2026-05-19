@@ -3,7 +3,10 @@
 
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
-import { createAdminZodSchema } from "@/zod/admin.validation";
+import {
+  createAdminZodSchema,
+  updateAdminZodSchema,
+} from "@/zod/admin.validation";
 
 /**
  * CREATE ADMIN
@@ -106,6 +109,75 @@ export async function getAdminById(id: string) {
     return {
       success: false,
       message: `${process.env.NODE_ENV === "development" ? error.message : "Something went wrong"}`,
+    };
+  }
+}
+
+/**
+ * UPDATE ADMIN
+ * API: PATCH /admin/:id
+ */
+export async function updateAdmin(
+  id: string,
+  _prevState: any,
+  formData: FormData,
+) {
+  const validationPayload: any = {
+    name: formData.get("name") as string,
+    contactNumber: formData.get("contactNumber") as string,
+  };
+
+  /*
+    // Server-side validation
+        const validation = updateAdminZodSchema.safeParse(validationPayload);
+        if (!validation.success) {
+            const errors = validation.error.issues.map((err: any) => ({
+                field: err.path[0] as string,
+                message: err.message,
+            }));
+            return {
+                success: false,
+                message: "Validation failed",
+                formData: validationPayload,
+                errors,
+            };
+        }
+    */
+
+  const validation = zodValidator(validationPayload, updateAdminZodSchema);
+  if (!validation.success && validation.errors) {
+    return {
+      success: validation.success,
+      message: "Validation failed",
+      formData: validationPayload,
+      errors: validation.errors,
+    };
+  }
+  if (!validation.data) {
+    return {
+      success: false,
+      message: "Validation failed",
+      formData: validationPayload,
+    };
+  }
+
+  try {
+    const response = await serverFetch.patch(`/admin/${id}`, {
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(validation.data),
+    });
+
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.error("Update admin error:", error);
+    return {
+      success: false,
+      message:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Failed to update admin",
+      formData: validationPayload,
     };
   }
 }
