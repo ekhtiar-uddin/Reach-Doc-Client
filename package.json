@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" feat: add resetPassword service function zod schemas \" && git push",
+    "commit": "git add . && git commit -m \" feat: add getNewAccessToken service function \" && git push",
     "shadcn": "npx shadcn@latest add checkbox command popover"
   },
   "dependencies": {
