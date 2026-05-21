@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" refactor: updated in getUserInfo \" && git push",
+    "commit": "git add . && git commit -m \" feat: add MyProfile component \" && git push",
     "shadcn": "npx shadcn@latest add checkbox command popover"
   },
   "dependencies": {
