@@ -1,21 +1,25 @@
 import LoginSuccessToast from "@/components/shared/LoginSuccessToast";
 import LogoutSuccessToast from "@/components/shared/LogoutSuccessToast";
 import type { Metadata } from "next";
-import { DM_Sans, Fraunces, Geist_Mono } from "next/font/google";
+import { Outfit } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-});
+// const dmSans = DM_Sans({
+//   variable: "--font-dm-sans",
+//   subsets: ["latin"],
+// });
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-});
+// const fraunces = Fraunces({
+//   variable: "--font-fraunces",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
 });
 
@@ -29,12 +33,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("Rendering RootLayout", process.env.JWT_SECRET);
   return (
-    <html
-      lang="en"
-      className={`${dmSans.variable} ${fraunces.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className={` ${outfit.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         {children}
 
