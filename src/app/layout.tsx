@@ -29,6 +29,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log("Rendering RootLayout", process.env.JWT_SECRET);
   return (
     <html
       lang="en"

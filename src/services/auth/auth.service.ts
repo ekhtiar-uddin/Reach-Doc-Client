@@ -5,6 +5,7 @@ import {
   UserRole,
 } from "@/lib/auth-utils";
 
+import { verifyAccessToken } from "@/lib/jwtHanlders";
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
 import { resetPasswordSchema } from "@/zod/auth.validation";
@@ -98,7 +99,7 @@ export async function resetPassword(_prevState: any, formData: FormData) {
         password: validationPayload.newPassword,
       }),
       headers: {
-        Authorization: accessToken,
+        // Authorization: accessToken,
         "Content-Type": "application/json",
       },
     });
