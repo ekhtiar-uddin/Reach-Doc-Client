@@ -57,3 +57,21 @@ export async function createDoctorSchedule(scheduleIds: string[]) {
     };
   }
 }
+
+export async function deleteDoctorOwnSchedule(scheduleId: string) {
+  try {
+    const response = await serverFetch.delete(`/doctor-schedule/${scheduleId}`);
+    const result = await response.json();
+
+    return {
+      success: result.success,
+      message: result.message || "Schedule removed successfully",
+    };
+  } catch (error: any) {
+    console.error("Delete schedule error:", error);
+    return {
+      success: false,
+      message: error.message || "Failed to remove schedule",
+    };
+  }
+}
