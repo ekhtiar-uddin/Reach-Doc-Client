@@ -21,6 +21,9 @@ const AdminDoctorsManagementPage = async ({
   const totalPages = Math.ceil(
     (doctorsResult?.meta?.total || 1) / (doctorsResult?.meta?.limit || 1),
   );
+
+  console.log("dsfsdf", doctorsResult);
+
   return (
     <div className="space-y-6">
       <DoctorsManagementHeader specialities={specialitiesResult?.data || []} />
