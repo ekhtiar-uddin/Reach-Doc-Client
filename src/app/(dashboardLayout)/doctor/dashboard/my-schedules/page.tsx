@@ -27,14 +27,13 @@ const DoctorMySchedulesPage = async ({
   const myDoctorsScheduleResponse = await getDoctorOwnSchedules(queryString);
   const availableSchedulesResponse = await getAvailableSchedules();
 
-  console.log({
-    myDoctorsScheduleResponse,
-    availableSchedulesResponse,
-  });
-
-  const schedules = myDoctorsScheduleResponse?.data || [];
+  // const schedules = myDoctorsScheduleResponse?.data || []; - from video
+  const schedules = availableSchedulesResponse?.data || [];
   const meta = myDoctorsScheduleResponse?.meta;
   const totalPages = Math.ceil((meta?.total || 1) / (meta?.limit || 1));
+
+  // console.log("sdfsd ---", myDoctorsScheduleResponse);
+  // console.log("sdfsd again---", availableSchedulesResponse);
 
   return (
     <div className="space-y-6">
