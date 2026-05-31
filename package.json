@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" feat: added DoctorGrid component \" && git push",
+    "commit": "git add . && git commit -m \" feat: added DoctorSearchFilters component \" && git push",
     "shadcn": "npx shadcn@latest add checkbox command popover"
   },
   "dependencies": {
