@@ -34,7 +34,7 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
   const router = useRouter();
   const [showReviewDialog, setShowReviewDialog] = useState(false);
 
-  const isCompleted = appointment.status === AppointmentStatus.COMPLETED;
+  const isCompleted = appointment?.status === AppointmentStatus?.COMPLETED;
   const canReview = isCompleted && !appointment.review;
 
   const getStatusBadge = (status: AppointmentStatus) => {
