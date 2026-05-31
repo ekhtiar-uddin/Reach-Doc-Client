@@ -3,40 +3,29 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { format } from "date-fns";
-import {
-  AlertCircle,
-  Calendar,
-  CheckCircle2,
-  Clock,
-  MapPin,
-  Phone,
-  Star,
-  Stethoscope,
-  User,
-} from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-// import ReviewDialog from "./ReviewDialog";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
   AppointmentStatus,
   IAppointment,
 } from "@/types/appointments.interface";
-import ReviewDialog from "./ReviewDialog";
+import { format } from "date-fns";
+import {
+  Calendar,
+  Clock,
+  FileText,
+  MapPin,
+  MessageSquare,
+  Star,
+  Stethoscope,
+  User,
+} from "lucide-react";
+import Link from "next/link";
 
-interface AppointmentDetailProps {
-  appointment: IAppointment;
+interface AppointmentsListProps {
+  appointments: IAppointment[];
 }
 
-const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
-  const router = useRouter();
-  const [showReviewDialog, setShowReviewDialog] = useState(false);
-
-  const isCompleted = appointment.status === AppointmentStatus.COMPLETED;
-  const canReview = isCompleted && !appointment.review;
-
+const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
   const getStatusBadge = (status: AppointmentStatus) => {
     const statusConfig: Record<
       AppointmentStatus,
@@ -69,340 +58,162 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
       </Badge>
     );
   };
-  return (
-    <div className="max-w-5xl mx-auto space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            Appointment Details
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            Complete information about your appointment
+
+  if (appointments.length === 0) {
+    return (
+      <Card className="border-dashed">
+        <CardContent className="flex flex-col items-center justify-center py-12">
+          <Calendar className="h-12 w-12 text-muted-foreground mb-4" />
+          <h3 className="text-lg font-semibold mb-2">No Appointments Yet</h3>
+          <p className="text-muted-foreground text-center max-w-sm">
+            You haven&apos;t booked any appointments. Browse our doctors and
+            book your first consultation.
           </p>
-        </div>
-        <Button variant="outline" onClick={() => router.back()}>
-          Back
-        </Button>
-      </div>
-
-      {/* Review Notification - Only show if can review (completed but no review) */}
-      {canReview && (
-        <Card className="border-amber-200 bg-amber-50">
-          <CardContent className="pt-6">
-            <div className="flex items-start gap-3">
-              <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5" />
-              <div className="flex-1">
-                <h3 className="font-semibold text-amber-900">
-                  Review This Appointment
-                </h3>
-                <p className="text-sm text-amber-700 mt-1">
-                  Your appointment has been completed. Share your experience by
-                  leaving a review for Dr. {appointment.doctor?.name}.
-                </p>
-                <Button
-                  onClick={() => setShowReviewDialog(true)}
-                  className="mt-3"
-                  size="sm"
-                >
-                  Write a Review
-                </Button>
+          <Button className="mt-4" asChild>
+            <a href="/consultation">Find a Doctor</a>
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
+  return (
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {appointments.map((appointment) => (
+        <Card
+          key={appointment.id}
+          className="hover:shadow-lg transition-shadow"
+        >
+          <CardContent className="pt-6 space-y-4">
+            {/* Status and Review Badge */}
+            <div className="flex justify-between items-start gap-2 flex-wrap">
+              {getStatusBadge(appointment.status)}
+              <div className="flex gap-2 flex-wrap">
+                {appointment.prescription && (
+                  <Badge
+                    variant="outline"
+                    className="bg-green-50 text-green-700"
+                  >
+                    <FileText className="h-3 w-3 mr-1" />
+                    Prescription
+                  </Badge>
+                )}
+                {appointment.status === AppointmentStatus.COMPLETED &&
+                  !appointment.review && (
+                    <Badge
+                      variant="outline"
+                      className="bg-amber-50 text-amber-700 border-amber-300 animate-pulse"
+                    >
+                      <MessageSquare className="h-3 w-3 mr-1" />
+                      Can Review
+                    </Badge>
+                  )}
               </div>
             </div>
-          </CardContent>
-        </Card>
-      )}
 
-      {/* Cannot Review Yet - Only show if not completed and no review */}
-      {!isCompleted && !appointment.review && (
-        <Card className="border-blue-200 bg-blue-50">
-          <CardContent className="pt-6">
-            <div className="flex items-start gap-3">
-              <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5" />
-              <div>
-                <h3 className="font-semibold text-blue-900">
-                  Review Not Available Yet
-                </h3>
-                <p className="text-sm text-blue-700 mt-1">
-                  You can review this appointment after it has been completed.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      <div className="grid gap-6 lg:grid-cols-2">
-        {/* Doctor Information */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <User className="h-5 w-5" />
-              Doctor Information
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+            {/* Doctor Info */}
             <div>
-              <p className="text-2xl font-semibold">
-                {appointment.doctor?.name || "N/A"}
-              </p>
-              <p className="text-muted-foreground">
-                {appointment.doctor?.designation || "Doctor"}
-              </p>
+              <div className="flex items-start gap-3">
+                <div className="bg-blue-100 rounded-full p-2">
+                  <User className="h-5 w-5 text-blue-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-lg">
+                    {appointment.doctor?.name || "N/A"}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {appointment.doctor?.designation || "Doctor"}
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <Separator />
-
+            {/* Specialties */}
             {appointment.doctor?.doctorSpecialties &&
               appointment.doctor.doctorSpecialties.length > 0 && (
-                <>
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Stethoscope className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm font-medium">Specialties</span>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {appointment.doctor.doctorSpecialties.map((ds, idx) => (
-                        <Badge key={idx} variant="secondary">
-                          {ds.specialties?.title || "N/A"}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                  <Separator />
-                </>
-              )}
-
-            <div className="space-y-2">
-              {appointment.doctor?.qualification && (
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Qualification:</span>
-                  <span className="font-medium">
-                    {appointment.doctor.qualification}
-                  </span>
-                </div>
-              )}
-
-              {appointment.doctor?.experience !== undefined && (
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Experience:</span>
-                  <span className="font-medium">
-                    {appointment.doctor.experience} years
-                  </span>
-                </div>
-              )}
-
-              {appointment.doctor?.currentWorkingPlace && (
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Working at:</span>
-                  <span className="font-medium">
-                    {appointment.doctor.currentWorkingPlace}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            <Separator />
-
-            <div className="space-y-2">
-              {appointment.doctor?.contactNumber && (
-                <div className="flex items-center gap-2 text-sm">
-                  <Phone className="h-4 w-4 text-muted-foreground" />
-                  <span>{appointment.doctor.contactNumber}</span>
-                </div>
-              )}
-
-              {appointment.doctor?.address && (
-                <div className="flex items-start gap-2 text-sm">
-                  <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
-                  <span>{appointment.doctor.address}</span>
-                </div>
-              )}
-            </div>
-
-            {appointment.doctor?.appointmentFee !== undefined && (
-              <>
-                <Separator />
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-blue-900">
-                      Consultation Fee
-                    </span>
-                    <span className="text-xl font-bold text-blue-600">
-                      ${appointment.doctor.appointmentFee}
-                    </span>
-                  </div>
-                </div>
-              </>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Appointment Details */}
-        <div className="space-y-6 lg:col-span-1">
-          {/* Status */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Appointment Status</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">
-                  Current Status
-                </span>
-                {getStatusBadge(appointment.status)}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Schedule */}
-          {appointment.schedule && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5" />
-                  Schedule
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="bg-linear-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 space-y-3">
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">Date</p>
-                    <p className="text-xl font-bold text-blue-900">
-                      {format(
-                        new Date(appointment.schedule.startDateTime),
-                        "EEEE",
-                      )}
-                    </p>
-                    <p className="text-blue-700">
-                      {format(
-                        new Date(appointment.schedule.startDateTime),
-                        "MMMM d, yyyy",
-                      )}
-                    </p>
-                  </div>
-
-                  <Separator className="bg-blue-200" />
-
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-5 w-5 text-blue-600" />
-                    <div>
-                      <p className="text-sm text-muted-foreground">Time</p>
-                      <p className="font-semibold text-blue-900">
-                        {format(
-                          new Date(appointment.schedule.startDateTime),
-                          "h:mm a",
-                        )}{" "}
-                        -{" "}
-                        {format(
-                          new Date(appointment.schedule.endDateTime),
-                          "h:mm a",
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Prescription */}
-          {appointment.prescription && (
-            <Card className="border-green-200">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-green-700">
-                  <CheckCircle2 className="h-5 w-5" />
-                  Prescription Available
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="bg-green-50 rounded-lg p-3 space-y-2">
-                  <div>
-                    <span className="text-sm font-medium text-green-900">
-                      Instructions:
-                    </span>
-                    <p className="text-sm text-green-700 mt-1">
-                      {appointment.prescription.instructions}
-                    </p>
-                  </div>
-
-                  {appointment.prescription.followUpDate && (
-                    <div>
-                      <span className="text-sm font-medium text-green-900">
-                        Follow-up Date:
-                      </span>
-                      <p className="text-sm text-green-700">
-                        {format(
-                          new Date(appointment.prescription.followUpDate),
-                          "MMMM d, yyyy",
-                        )}
-                      </p>
-                    </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Stethoscope className="h-4 w-4 text-muted-foreground" />
+                  {appointment.doctor.doctorSpecialties
+                    .slice(0, 2)
+                    .map((ds, idx) => (
+                      <Badge key={idx} variant="secondary" className="text-xs">
+                        {ds.specialties?.title || "N/A"}
+                      </Badge>
+                    ))}
+                  {appointment.doctor.doctorSpecialties.length > 2 && (
+                    <Badge variant="secondary" className="text-xs">
+                      +{appointment.doctor.doctorSpecialties.length - 2} more
+                    </Badge>
                   )}
                 </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      </div>
-
-      {/* Review Section - Full Width Below */}
-      {appointment.review && (
-        <Card className="border-yellow-200">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-yellow-700">
-              <Star className="h-5 w-5 fill-yellow-600" />
-              Your Review
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="bg-yellow-50 rounded-lg p-4 space-y-3">
-              <div className="flex items-center gap-1">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <Star
-                    key={star}
-                    className={`h-5 w-5 ${
-                      star <= appointment.review!.rating
-                        ? "fill-yellow-500 text-yellow-500"
-                        : "text-gray-300"
-                    }`}
-                  />
-                ))}
-                <span className="ml-2 text-sm font-medium text-yellow-900">
-                  {appointment.review.rating}/5
-                </span>
-              </div>
-
-              {appointment.review.comment && (
-                <div>
-                  <p className="text-sm text-yellow-900 font-medium mb-1">
-                    Comment:
-                  </p>
-                  <p className="text-sm text-yellow-800">
-                    {appointment.review.comment}
-                  </p>
-                </div>
               )}
 
-              <p className="text-xs text-yellow-600 italic">
-                Reviews cannot be edited or deleted once submitted.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+            {/* Schedule */}
+            {appointment.schedule && (
+              <div className="space-y-2 bg-gray-50 rounded-lg p-3">
+                <div className="flex items-center gap-2 text-sm">
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                  <span className="font-medium">
+                    {format(
+                      new Date(appointment.schedule.startDateTime),
+                      "EEEE, MMM d, yyyy",
+                    )}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Clock className="h-4 w-4 text-muted-foreground" />
+                  <span>
+                    {format(
+                      new Date(appointment.schedule.startDateTime),
+                      "h:mm a",
+                    )}{" "}
+                    -{" "}
+                    {format(
+                      new Date(appointment.schedule.endDateTime),
+                      "h:mm a",
+                    )}
+                  </span>
+                </div>
+              </div>
+            )}
 
-      {/* Review Dialog */}
-      {canReview && (
-        <ReviewDialog
-          isOpen={showReviewDialog}
-          onClose={() => setShowReviewDialog(false)}
-          appointmentId={appointment.id}
-          doctorName={appointment.doctor?.name || "the doctor"}
-        />
-      )}
+            {/* Address */}
+            {appointment.doctor?.address && (
+              <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
+                <span className="line-clamp-2">
+                  {appointment.doctor.address}
+                </span>
+              </div>
+            )}
+
+            {/* Review Status */}
+            {appointment.status === AppointmentStatus.COMPLETED && (
+              <div>
+                {appointment.review ? (
+                  <div className="flex items-center gap-2 text-sm text-yellow-600 bg-yellow-50 rounded-lg p-2">
+                    <Star className="h-4 w-4 fill-yellow-600" />
+                    <span>Rated {appointment.review.rating}/5</span>
+                  </div>
+                ) : (
+                  <div className="text-sm text-muted-foreground bg-gray-50 rounded-lg p-2">
+                    No review yet
+                  </div>
+                )}
+              </div>
+            )}
+          </CardContent>
+
+          <CardFooter className="border-t pt-4">
+            <Button variant="outline" size="sm" className="w-full" asChild>
+              <Link href={`/dashboard/my-appointments/${appointment.id}`}>
+                View Details
+              </Link>
+            </Button>
+          </CardFooter>
+        </Card>
+      ))}
     </div>
   );
 };
 
-export default AppointmentDetails;
+export default AppointmentsList;
