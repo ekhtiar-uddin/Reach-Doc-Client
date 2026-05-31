@@ -1,3 +1,4 @@
+import AIDoctorSuggestion from "@/components/modules/Consultation/AIDoctorSuggestion";
 import DoctorGrid from "@/components/modules/Consultation/DoctorGrid";
 import DoctorSearchFilters from "@/components/modules/Consultation/DoctorSearchFilter";
 import TablePagination from "@/components/shared/TablePagination";
