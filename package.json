@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add . && git commit -m \" feat: added ReviewDialog component \" && git push",
+    "commit": "git add . && git commit -m \" feat: added createReview service function \" && git push",
     "shadcn": "npx shadcn@latest add checkbox command popover"
   },
   "dependencies": {
