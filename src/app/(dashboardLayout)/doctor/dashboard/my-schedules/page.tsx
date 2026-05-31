@@ -1,6 +1,6 @@
-import MySchedulesFilters from "@/components/modules/Doctor/MyScheduleFilters";
-import MySchedulesHeader from "@/components/modules/Doctor/MyScheduleHeader";
-import MySchedulesTable from "@/components/modules/Doctor/MyScheduleTable";
+import MySchedulesFilters from "@/components/modules/Doctor/mySchedules/MyScheduleFilters";
+import MySchedulesHeader from "@/components/modules/Doctor/mySchedules/MyScheduleHeader";
+import MySchedulesTable from "@/components/modules/Doctor/mySchedules/MyScheduleTable";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
