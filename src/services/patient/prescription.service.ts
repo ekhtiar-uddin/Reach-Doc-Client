@@ -45,3 +45,23 @@ export async function getMyPrescriptions(queryString?: string) {
     };
   }
 }
+
+export async function getAllPrescriptions(queryString?: string) {
+  try {
+    const response = await serverFetch.get(
+      `/prescription${queryString ? `?${queryString}` : ""}`,
+    );
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.error("Error fetching prescriptions:", error);
+    return {
+      success: false,
+      data: [],
+      message:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Failed to fetch prescriptions",
+    };
+  }
+}
