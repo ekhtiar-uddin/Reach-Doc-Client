@@ -2,6 +2,7 @@ import LoginSuccessToast from "@/components/shared/LoginSuccessToast";
 import LogoutSuccessToast from "@/components/shared/LogoutSuccessToast";
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
+import { Suspense } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
 // const dmSans = DM_Sans({
@@ -39,8 +40,10 @@ export default function RootLayout({
         {children}
 
         <Toaster position="top-right" richColors />
-        <LoginSuccessToast />
-        <LogoutSuccessToast />
+        <Suspense fallback={null}>
+          <LoginSuccessToast />
+          <LogoutSuccessToast />
+        </Suspense>
       </body>
     </html>
   );
