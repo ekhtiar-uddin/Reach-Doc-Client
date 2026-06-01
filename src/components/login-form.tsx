@@ -7,6 +7,12 @@ import { Button } from "./ui/button";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 
+const DEMO_CREDENTIALS = {
+  admin: { email: "admin.souvik@gmail.com", password: "secure123" },
+  patient: { email: "patient2@gmail.com", password: "123456" },
+  doctor: { email: "doctor1@gmail.com", password: "secure123" },
+};
+
 const LoginForm = ({ redirect }: { redirect?: string }) => {
   const [state, formAction, isPending] = useActionState(loginUser, null);
 
@@ -16,12 +22,52 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
     }
   }, [state]);
 
+  const fillCredentials = (role: keyof typeof DEMO_CREDENTIALS) => {
+    const emailInput = document.getElementById("email") as HTMLInputElement;
+    const passwordInput = document.getElementById(
+      "password",
+    ) as HTMLInputElement;
+    if (emailInput && passwordInput) {
+      emailInput.value = DEMO_CREDENTIALS[role].email;
+      passwordInput.value = DEMO_CREDENTIALS[role].password;
+    }
+  };
+
   return (
     <form action={formAction}>
       {redirect && <input type="hidden" name="redirect" value={redirect} />}
       <FieldGroup>
+        <div className="flex items-center gap-2 flex-wrap">
+          <Button
+            type="button"
+            className="hover:bg-primary hover:text-white"
+            variant="outline"
+            size="sm"
+            onClick={() => fillCredentials("admin")}
+          >
+            Admin
+          </Button>
+          <Button
+            type="button"
+            className="hover:bg-primary hover:text-white"
+            variant="outline"
+            size="sm"
+            onClick={() => fillCredentials("patient")}
+          >
+            Patient
+          </Button>
+          <Button
+            type="button"
+            className="hover:bg-primary hover:text-white"
+            variant="outline"
+            size="sm"
+            onClick={() => fillCredentials("doctor")}
+          >
+            Doctor
+          </Button>
+        </div>
+
         <div className="grid grid-cols-1 gap-4">
-          {/* Email */}
           <Field>
             <FieldLabel htmlFor="email">Email</FieldLabel>
             <Input
@@ -29,13 +75,10 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
               name="email"
               type="email"
               placeholder="m@example.com"
-              //   required
             />
-
             <InputFieldError field="email" state={state} />
           </Field>
 
-          {/* Password */}
           <Field>
             <FieldLabel htmlFor="password">Password</FieldLabel>
             <Input
@@ -43,17 +86,16 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
               name="password"
               type="password"
               placeholder="Enter your password"
-              //   required
             />
             <InputFieldError field="password" state={state} />
           </Field>
         </div>
+
         <FieldGroup className="mt-4">
           <Field>
             <Button type="submit" disabled={isPending}>
               {isPending ? "Logging in..." : "Login"}
             </Button>
-
             <FieldDescription className="px-6 text-center">
               Don&apos;t have an account?{" "}
               <a href="/register" className="text-blue-600 hover:underline">
