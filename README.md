@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ReachDoc Frontend
+
+A modern healthcare platform frontend for patient booking, doctor management, and AI-assisted discovery. Built with the Next.js App Router, server actions, and a modular component system to support multiple user roles (patient, doctor, admin).
+
+## Highlights
+
+- Role-aware dashboards and navigation for admin, doctor, and patient experiences.
+- Authentication with access and refresh token cookies and role-based redirects.
+- AI-inspired consultation flow with doctor search, filters, and pagination.
+- Video call UI experience for virtual consultations.
+- Component-driven UI with Tailwind CSS and shadcn/ui primitives.
+
+## Tech Stack
+
+- Next.js (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- shadcn/ui and Radix UI
+- Zod validation
+- Sonner toast notifications
+- Framer Motion animations
+
+## Project Structure
+
+- App Router pages and layouts live under [src/app](src/app).
+- UI components and feature modules live under [src/components](src/components).
+- Data access and server actions live under [src/services](src/services).
+- Shared utilities and auth helpers live under [src/lib](src/lib).
+- Zod schemas live under [src/zod](src/zod).
+- Domain types live under [src/types](src/types).
+
+## Key Routes
+
+- Public landing: `/`
+- Auth: `/login`, `/register`, `/reset-password`
+- Consultation: `/consultation`
+- Video call: `/video-call`
+- Patient dashboard: `/dashboard`
+- Doctor dashboard: `/doctor/dashboard`
+- Admin dashboard: `/admin/dashboard`
+
+## Authentication and Authorization
+
+- Uses access and refresh tokens stored as secure, httpOnly cookies.
+- Server actions verify JWTs to determine role and routing.
+- Role-based route ownership and dashboard defaults are centralized in [src/lib/auth-utils.ts](src/lib/auth-utils.ts).
+
+## API Integration
+
+All API calls are routed through a shared server fetch helper that:
+
+- Targets the backend base URL from `NEXT_PUBLIC_BASE_API_URL`.
+- Refreshes access tokens when needed using the refresh token cookie.
+- Supports standard HTTP verbs and JSON or multipart payloads.
+
+See [src/lib/server-fetch.ts](src/lib/server-fetch.ts) for details.
+
+## Environment Variables
+
+Create a local environment file (for example, `.env.local`) with the following values:
+
+```bash
+NEXT_PUBLIC_BASE_API_URL=http://localhost:5000/api/v1
+JWT_SECRET=your_jwt_secret
+```
+
+`JWT_SECRET` is used on the server to verify tokens in server actions. Do not expose production secrets in the client.
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies and start the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` - Start the development server.
+- `npm run build` - Build the production bundle.
+- `npm run start` - Start the production server.
+- `npm run lint` - Run ESLint.
 
-## Learn More
+## UI and Assets
 
-To learn more about Next.js, take a look at the following resources:
+- Global styles are defined in [src/app/globals.css](src/app/globals.css).
+- Remote images are allowed from Cloudinary via Next.js image settings.
+- The primary font is loaded via `next/font` (Outfit).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- The login page provides demo credentials buttons for admin, doctor, and patient roles.
+- Some dashboard pages are placeholders and can be extended with domain-specific views.
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Build and run:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+npm run start
+```
+
+Ensure the backend API is reachable and environment variables are set in your hosting provider.
