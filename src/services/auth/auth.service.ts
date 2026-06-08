@@ -12,6 +12,7 @@ import { parse } from "cookie";
 import jwt from "jsonwebtoken";
 import { revalidateTag } from "next/cache";
 import { deleteCookie, getCookie, setCookie } from "./tokenHandlers";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function updateMyProfile(formData: FormData) {
   try {

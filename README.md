@@ -71,6 +71,8 @@ JWT_SECRET=your_jwt_secret
 
 Install dependencies and start the development server:
 
+<!-- specialties -->
+
 ```bash
 npm install
 npm run dev
